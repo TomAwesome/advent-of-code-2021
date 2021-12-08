@@ -1,12 +1,3 @@
-class Fish:
-    interval:int = 6
-    timer:int
-    newFish:bool = False
-    def __init__(self, timer:int, newFish:bool) -> None:
-        self.timer = timer
-        self.newFish = newFish
-
-
 def buildFish() -> list[int]:
     fishInput = open("day6input.txt").readline().replace('\n', '')
     return list(map(lambda x: int(x), fishInput.split(',')))
