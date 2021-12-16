@@ -4,6 +4,8 @@ def getLines() -> list[str]:
 
 closingMappings:dict[str:str] = {')':'(', '}':'{', ']':'[', '>':'<'}
 
+finishingPoints:dict[str:int] = {'(':1, '[':2, '{':3, '<': 4}
+
 def checkLine(line:str) -> int:
   syntax:list = []
   for character in line:
@@ -13,18 +15,21 @@ def checkLine(line:str) -> int:
       openingChar = syntax.pop()
       if openingChar != closingMappings[character]:
         print(f'found {character} needed closing for {openingChar}')
-        if character == ')':
-          return 3
-        elif character == ']':
-          return 57
-        elif character == '}':
-          return 1197
-        else:
-          return 25137
-  return 0
+        return None
+  score:int = 0
+  syntax.reverse()
+  for point in list(map(lambda x: finishingPoints[x], syntax)):
+    score = (score * 5) + point
+  return score
 
 scores:list[int] = []
 for line in getLines():
-  scores.append(checkLine(line))
+  score = checkLine(line)
+  if score:
+    scores.append(score)
 
-print(sum(scores))
+scores.sort()
+
+print(scores)
+
+print(scores[int((len(scores) - 1) / 2)])
